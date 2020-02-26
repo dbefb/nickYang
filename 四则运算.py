@@ -34,7 +34,7 @@ class gradeOne(object):
                 answer,formula=self.formula()
             
                 if answer >= 0 and float(answer).is_integer() == True:
-                    print(formula+'='+str(int(answer)))
+                    # print(formula+'='+str(int(answer)))
                     if switch == 0:
                         p=document.add_paragraph('{}: {}='.format(a+1,formula))    # 增加一段
                         p2=document2.add_paragraph('{}: {}'.format(a+1,int(answer)))
@@ -111,7 +111,7 @@ class gradeFour(gradeThree):
                 formula=formula+self.operator[random.randint(0,3)]+str(random.randint(1,100))
                 answer=eval(formula)
                 if answer >= 0 and float(answer).is_integer() == True:
-                    print(formula+'='+str(int(answer)))
+                    # print(formula+'='+str(int(answer)))
                     if switch == 0:
                         p=document.add_paragraph('{}: {}='.format(a+1,formula))    # 增加一段
                         p2=document2.add_paragraph('{}: {}'.format(a+1,int(answer)))
@@ -187,7 +187,7 @@ class gradeSix(gradeFive):
                 formula=formula+self.operator[random.randint(0,3)]+formula2
                 answer=eval(formula)
                 if   float(answer).is_integer() == True:
-                    print(formula+'='+str(int(answer)))
+                    # print(formula+'='+str(int(answer)))
                     if switch == 0:
                         p=document.add_paragraph('{}: {}='.format(a,formula))     # 增加一段
                         p2=document2.add_paragraph('{}: {}'.format(a+1,int(answer)))
