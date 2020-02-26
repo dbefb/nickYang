@@ -1,30 +1,72 @@
 import sys
+import re
 class txtHandle(object):
-    def __init__(path):
+    def __init__(self,path):
         '''
         导入待分析文件
         '''
-        
-    def queryFile(path):
+        with open(path) as f:
+            self.content = f.read()
+            self.content = re.split(r'[.!?]',self.content)
+            if self.content != '':      #如果最后一个是''，说明倒数第一句不完整，删除
+                del self.content[-1]
+            
+    def queryFile(self,path):
         '''
         导入查询文件，把里面的单词弄成一个列表1
         '''
+        with open(path) as f:
+            self.query = (f.read()).split('\n')
+            
+                    
+    def fileAnalysis(self):
+        '''
+        对两个文档进行处理，调用findSubscript进行单词在句子、句子在列表中的位置定位
+        '''
+        list=[]
+        for word in self.query:
+            for sentences in self.content:
+    
+                if sentences.find(word) != -1:
 
-    def fileAnalysis():
+                    sentences_str = sentences
+                    sentences = sentences.split(' ')
+                    sentences = [i for i in sentences if i!='']   #删除列表空元素
+
+                    setences_position = self.findSubscript(self.content,sentences_str)
+                    word_position = self.findSubscript(sentences,word)
+
+                    list.append(str(setences_position)+'/'+str(word_position))
+                    
+            if list == []:
+                print('None')
+            else:
+                print(','.join(list))
+                list=[]
+        
+    def findSubscript(self,list,element):
         '''
-        对分析文件进行处理：1、拆成句子，弄成一个列表2，每个句子占列表一个元素，用下标进行查找
-                          2、对每一个列表1中的单词放到列表2中进行查询，查询到了以后记录当前列表2的下标，这就是第n+1个句子
+        查找单词在列表中的下标
+        返回单词句子的位置
         '''
-    def print():
-        '''
-        输出所在位置
-        '''
-def main():
+        for i in range(0,len(list)):
+
+            if list[i] == element:
+
+                return i+1
+            
+
+
+    
+# def main():
     '''
     sys.argv[1]为待分析文件
     sys.argv[2]为查询文件
     '''
 if __name__ == '__main__':
-    mian()
+    txt = txtHandle('D:\桌面\eng.txt')
+    txt.queryFile('D:\桌面\query.txt')
+    txt.fileAnalysis()
+    
     
 
