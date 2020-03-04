@@ -4,14 +4,33 @@ import sys
  
 def conversionFormula(formula):
 
-    format_list = re.findall('[\w\.]+|\(|\+|\-|\*|\/|\^|\)',formula)
+    # format_list = re.findall('[\w\.]+|\(|\+|\-|\*|\/|\^|\)',formula)
+    format_list = re.findall('[\w\.]+|.',formula)
+    # format_list = re.findall('.',formula)
+    print(format_list)
+    for i in format_list:
+        if i.isdigit() is False and i.isalpha() is False and\
+             i != '(' and i!= ')' and i!='+' and i!= '-' and\
+                  i!= '*' and  i!= '/' and i!= '^':
+                  print('INPUT ERROR')
+                  return 'ERROR'
+    
+    if format_list == []:
+        print('INPUT ERROR')
+        return 'ERROR'
     switch =0
     switch2=0
     count=0
+    print(format_list)
+    if format_list[0] == '+' or format_list[0] == '*' or format_list[0] == '/':
+        print('INPUT ERROR')
+        return 'ERROR'
+    else:
+        pass
     for i in format_list:
         if i == '(' or i == ')':
             switch2+=1
-    
+        
     for i in format_list:
         if i == '+' or i == '-' or i == '*' or i == '/' or i == '^':
             switch =1
@@ -19,6 +38,7 @@ def conversionFormula(formula):
     if switch != 1 :
         print('INPUT ERROR')
         return 'ERROR'
+    
     for i in format_list:
         if i == '+' or i == '-' or i == '*' or i == '/' :
             if format_list[count-1] == '+' or format_list[count-1] == '-' or\
@@ -42,8 +62,13 @@ def conversionFormula(formula):
     return format_list
 
 
-def calculator(formula):
+def calculator(formula):    
     count = 0
+    
+    if formula[0] == '*' or formula[0] == '/' or formula[0] == '^':
+        print('INPUT ERROR')
+        return 'ERROR'
+
     for i in formula:
 
         if i == '^':
@@ -52,7 +77,7 @@ def calculator(formula):
             del(formula[count])
             return calculator(formula)
 
-        if i == '*':
+        elif i == '*':
             formula[count-1]=str(float(formula[count-1])*float(formula[count+1]))
             del(formula[count])
             del(formula[count])
@@ -67,10 +92,12 @@ def calculator(formula):
         count+=1
 
     count=0
-
     if formula[0]=='-':
         formula[1]=formula[0]+formula[1]
         del(formula[0])
+    elif formula[0] == '+':
+        del(formula[0])
+
 
     for i in formula:
 
@@ -80,7 +107,7 @@ def calculator(formula):
             del(formula[count])
             return calculator(formula)
 
-        elif i == '-':
+        elif i == '-':  
             formula[count-1]=str(float(formula[count-1])-float(formula[count+1]))
             del(formula[count])
             del(formula[count])
@@ -102,7 +129,7 @@ def remove_bracket(formula):
             
             smallestFomula = formula[leftBracket+1:count]
             smallestFomulaAnswer = calculator(smallestFomula)          
-            if smallestFomulaAnswer < 0:
+            if isinstance(smallestFomulaAnswer,float) is True and smallestFomulaAnswer < 0:
                 if formula[leftBracket-1] == '-':
                     formula[leftBracket-1] = '+'
                     temp = formula[:leftBracket]
@@ -119,6 +146,8 @@ def remove_bracket(formula):
                     temp = formula[:leftBracket]
                     temp.append(str(smallestFomulaAnswer))
                     formula = temp+formula[count+1:]
+            elif isinstance(smallestFomulaAnswer,str) is True and smallestFomulaAnswer is 'ERROR':
+                return 'ERROR'
             else:
                 temp = formula[:leftBracket]
                 temp.append(str(smallestFomulaAnswer))
@@ -126,7 +155,8 @@ def remove_bracket(formula):
             
             return remove_bracket(formula)
         count+=1
-    
+    if formula[0] == '+':
+        del(formula[0])
     return formula
 
 if __name__ == '__main__': 
@@ -136,13 +166,14 @@ if __name__ == '__main__':
 
     if formula != 'ERROR':
         formula = remove_bracket(formula)
-        answer = calculator(formula)
-        if float(answer).is_integer() == True:
-            answer=int(answer)
-        else:
-            answer=format(answer,'.10f')
-            answer=float(str(answer).rstrip('0'))
-        print(answer)
+        if formula != 'ERROR':
+            answer = calculator(formula)
+            if float(answer).is_integer() == True:
+                answer=int(answer)
+            else:
+                answer=format(answer,'.10f')
+                answer=float(str(answer).rstrip('0'))
+            print(answer)
     else:
-        a=1
+        pass
     
