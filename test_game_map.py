@@ -61,6 +61,11 @@ class TestGameMap(unittest.TestCase):
         self.game_map.print_map(['2'])
         self.game_map.print_map.assert_called_with(['2'])
         
+    def main():     
+        suite = unittest.makeSuite(TestGameMap)
+            # unittest.main(verbosity=2)     
+        runner = unittest.TextTestRunner()     
+        runner.run(suite) 
 if __name__ == '__main__':
 
-    unittest.main(verbosity=2)
+    main()
