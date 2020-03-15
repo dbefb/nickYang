@@ -101,26 +101,28 @@ def correct(word):
     candidates = known([word]) or known(edits1(word)) or known_edits2(word) or [word]
     return max(candidates, key=NWORDS.get)
 
+def main():
+    load_dic()
+    visit_dir(file_path)
+    tokenizer = TreebankWordTokenizer()
+    my_input = input("请输入文件名称：")
 
-load_dic()
-visit_dir(file_path)
-tokenizer = TreebankWordTokenizer()
-my_input = input("请输入文件名称：")
+    if ' ' not in my_input:
+        divide_str(my_input, word_list)
+        my_input = get_list
+    else:
+        my_input = tokenizer.tokenize(my_input)
+        print(my_input)
+        for i in range(len(my_input)):
+            my_input[i] = correct(my_input[i])
 
-if ' ' not in my_input:
-    divide_str(my_input, word_list)
-    my_input = get_list
-else:
-    my_input = tokenizer.tokenize(my_input)
     print(my_input)
+
     for i in range(len(my_input)):
-        my_input[i] = correct(my_input[i])
-
-print(my_input)
-
-for i in range(len(my_input)):
-    temp = fuzzy_finder_by_interval(my_input[i], all_file)
-    for j in range(len(temp)):
-        if temp[j] not in outcome:
-            outcome.append(temp[j])
-print(outcome)
+        temp = fuzzy_finder_by_interval(my_input[i], all_file)
+        for j in range(len(temp)):
+            if temp[j] not in outcome:
+                outcome.append(temp[j])
+    print(outcome)
+if __name__=='__main__':
+    main()
