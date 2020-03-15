@@ -102,10 +102,14 @@ def correct(word):
     return max(candidates, key=NWORDS.get)
 
 def main():
+    '''
+    修改提交
+    '''
     load_dic()
     visit_dir(file_path)
     tokenizer = TreebankWordTokenizer()
     my_input = input("请输入文件名称：")
+    
         if ' ' not in my_input:
         divide_str(my_input, word_list)
         my_input = get_list
