@@ -117,16 +117,7 @@ def main():
 
     print(my_input)
 
-    if ' ' not in my_input:
-        divide_str(my_input, word_list)
-        my_input = get_list
-    else:
-        my_input = tokenizer.tokenize(my_input)
-        print(my_input)
-        for i in range(len(my_input)):
-            my_input[i] = correct(my_input[i])
-
-    print(my_input)
+  
 
     for i in range(len(my_input)):
         temp = fuzzy_finder_by_interval(my_input[i], all_file)
