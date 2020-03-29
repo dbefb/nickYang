@@ -59,7 +59,7 @@ class WordCreate():
             content = file.read()
             
             x = re.findall(r'\((.*)\)', content)
-            # content = content.replace('29','cao')
+            
             for i in x:
                 print(i)
                 zifu = '('+i+')'
@@ -113,7 +113,7 @@ class WordCreate():
                 print()
             
 def main():
-    Spider()
+    # Spider()
     generator = WordCreate('D:\桌面\诗词库.txt')  #选择合适的路径
     generator.loop_execution()
 
