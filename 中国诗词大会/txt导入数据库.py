@@ -32,23 +32,21 @@ class WordCreate():
                 self.sc_list.append(weak_list)
         # print(self.sc_list)
     def OperationSql(self):
-        
+        num=1
         for i in self.sc_list:
-            print(len(i))
             for _ in range(11-len(i)):
-                i.append('NULL')
-            print(type(i[0]))            
-            cur.execute("INSERT INTO poetry(name,author,sentense_1,sentense_2,\
+                i.append('NULL')          
+            cur.execute("INSERT INTO poetry(id,name,author,sentense_1,sentense_2,\
                 sentense_3,sentense_4,sentense_5,sentense_6,sentense_7,sentense_8,\
-                    sentense_9,sentense_10) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%\
-                        (i[0],'NULL',i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9],i[10]))
+                    sentense_9,sentense_10) VALUES (%s,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%\
+                        (num,i[0],'NULL',i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9],i[10]))
             conn.commit()
-            
+            num+=1
 def main():
     
     generator = WordCreate('D:\桌面\诗词库.txt')  #选择合适的路径
-    # generator.loop_execution()
     generator.OperationSql()
-
+    
+    
 if __name__ == '__main__':
     main()
