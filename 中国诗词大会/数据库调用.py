@@ -5,23 +5,38 @@ def CallMySql():
     conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='newbegin',db='lsj',charset='utf8')
 
     cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
-
-    cur.execute('select * from poetry')
+    sql = 'select * from poetry WHERE id = {}'.format(random.randint(1,449))
+    cur.execute(sql)
     poetry = cur.fetchall()
+    poetry = poetry[0]
+    
 
-    random_poetry = random.choice(poetry)
+    poetry = {i:poetry[i] for i in poetry if poetry[i] != 'NULL'}
 
-    random_poetry = {i:random_poetry[i] for i in random_poetry if random_poetry[i]!='NULL'}
-
-    poetry_length = len(random_poetry)
-    # print(random_poetry)
-    sentence = random_poetry['sentense_'+str(random.randint(1,poetry_length-2))]
+    poetry_len = int((len(poetry) - 2)/2)
+    key = random.randint(1,poetry_len)
+    print(poetry)
+    sentence = poetry['sentense_'+str(key)]
     seg_sentence = jieba.cut(sentence, cut_all=False)
     seg_sentence = list(seg_sentence)
     seg_sentence = [i for i in seg_sentence if i !='，']
     key_word = random.choice(seg_sentence)
-    # print(key_word,sentence)
-    # print(random_poetry)
-    # print('word,name,sentence:',key_word,random_poetry['name'],sentence)
+    
+    return key_word,poetry['name'],sentence
+def CallMySql2():
+    conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='newbegin',db='lsj',charset='utf8')
 
-    return key_word,random_poetry['name'],sentence
+    cur = conn.cursor(cursor=pymysql.cursors.DictCursor)
+    sql = 'select * from poetry WHERE id = {}'.format(random.randint(1,449))
+    # sql = 'select * from poetry WHERE id = {}'.format(268)
+    cur.execute(sql)
+    poetry = cur.fetchall()
+    poetry = poetry[0]
+    # print(poetry)
+    poetry = {i:poetry[i] for i in poetry if poetry[i] != 'NULL'}
+    print(poetry)
+    poetry_len = int((len(poetry) - 2)/2)
+    key = random.randint(1,poetry_len)
+
+    # return key_word,random_poetry['name'],sentence
+    return poetry['yiwen_'+str(key)],poetry['name'],poetry['sentense_'+str(key)]

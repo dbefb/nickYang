@@ -239,3 +239,6 @@ if __name__ == '__main__':
         elif int(grade) == 6:
             grade_Six=gradeSix('六',int(cycleIndex))
             grade_Six.creatDocx()
+
+
+            
